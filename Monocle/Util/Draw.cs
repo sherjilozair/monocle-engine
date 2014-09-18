@@ -6,16 +6,26 @@ namespace Monocle
 {
     public static class Draw
     {
+        /// <summary>
+        /// The currently-rendering Renderer
+        /// </summary>
         static public Renderer Renderer { get; internal set; }
+
+        /// <summary>
+        /// All 2D rendering is done through this SpriteBatch instance
+        /// </summary>
         static public SpriteBatch SpriteBatch { get; private set; }
+
+        /// <summary>
+        /// The default Monocle font (Consolas 12). Loaded automatically by Monocle at startup
+        /// </summary>
         static public SpriteFont DefaultFont { get; private set; }
 
         /// <summary>
-        /// A subtexture used to draw rectangles and lines. 
-        /// Will be generated at startup, but you can replace this with a subtexture from your Atlas to reduce texture swaps.
-        /// Should be a 1x1 white pixel
+        /// Matrix that handles scaling for fullscreen. Automatically set by Monocle when the game switches from fullscreen to windowed mode.
+        /// All your rendering should use this Matrix and the default Renderers use it
         /// </summary>
-        static public Subtexture Pixel;
+        static public Matrix MasterRenderMatrix { get; internal set; }
 
         /// <summary>
         /// A subtexture used to draw particle systems.
@@ -24,6 +34,14 @@ namespace Monocle
         /// </summary>
         static public Subtexture Particle;
 
+        /// <summary>
+        /// A subtexture used to draw rectangles and lines. 
+        /// Will be generated at startup, but you can replace this with a subtexture from your Atlas to reduce texture swaps.
+        /// Use the top left pixel of your Particle Subtexture if you replace it!
+        /// Should be a 1x1 white pixel
+        /// </summary>
+        static public Subtexture Pixel;
+
         static private Rectangle rect;
 
         static internal void Initialize(GraphicsDevice graphicsDevice)
@@ -31,7 +49,6 @@ namespace Monocle
             SpriteBatch = new SpriteBatch(graphicsDevice);
             DefaultFont = Engine.Instance.Content.Load<SpriteFont>(@"Monocle\MonocleDefault");
 
-#if DEBUG
             UseDebugPixelTexture();
 #endif
         }

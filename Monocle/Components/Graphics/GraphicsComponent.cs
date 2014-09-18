@@ -57,23 +57,6 @@ namespace Monocle
             }
         }
 
-        public void CenterOrigin()
-        {
-            Origin.X = Width / 2f;
-            Origin.Y = Height / 2f;
-        }
-
-        public void JustifyOrigin(Vector2 at)
-        {
-            Origin.X = Width * at.X;
-            Origin.Y = Height * at.Y;
-        }
-
-        public void JustifyOrigin(float x, float y)
-        {
-            JustifyOrigin(new Vector2(x, y));
-        }
-
         public Vector2 RenderPosition
         {
             get
@@ -81,9 +64,6 @@ namespace Monocle
                 return (Entity == null ? Vector2.Zero : Entity.Position) + Position;
             }
         }
-
-        public abstract float Width { get; }
-        public abstract float Height { get; }
 
         public void DrawOutline(int offset = 1)
         {
