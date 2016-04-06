@@ -49,6 +49,7 @@ namespace Monocle
             //Speed
             Position += Speed * dt;
             Speed += Type.Acceleration * dt;
+			Speed = Calc.Approach(Speed, Vector2.Zero, Type.Friction * dt);
             if (Type.SpeedMultiplier != 1)
                 Speed *= (float)Math.Pow(Type.SpeedMultiplier, dt);
 
@@ -59,7 +60,7 @@ namespace Monocle
         public void Render()
         {
             if (Type.Source == null)
-                Draw.SpriteBatch.Draw(Draw.Particle.Texture2D, RenderPosition, Draw.Particle.ClipRect, Color, 0, Vector2.One, Size * 0.5f, SpriteEffects.None, 0);
+                Draw.SpriteBatch.Draw(Draw.Particle.Texture2D, RenderPosition - new Vector2((int)(Size * 0.5f), (int)(Size * 0.5f)), Draw.Particle.ClipRect, Color, 0, Vector2.Zero, Size, SpriteEffects.None, 0);
             else
                 Draw.SpriteBatch.Draw(Type.Source.Texture2D, RenderPosition, Type.Source.ClipRect, Color, Rotation, Type.Source.Center, Size, SpriteEffects.None, 0);
         }
